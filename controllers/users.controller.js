@@ -116,7 +116,7 @@ const login = catchAsync(async (req, res, next) => {
   // Validate if the user exist with given email
   const user = await User.findOne({
     where: { userName, status: 'active' },
-    include: { Profile },
+    include: { model: Profile },
   });
 
   // Compare passwords (entered password vs db password)
