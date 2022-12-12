@@ -31,11 +31,13 @@ usersRouter.post('/', addUserNameAndPassword, createUser);
 usersRouter.post('/login', login);
 
 // Protecting below endpoints
-usersRouter.use(protectSession, protectAdmin);
-
-usersRouter.get('/', getAllUsers);
+usersRouter.use(protectSession);
 
 usersRouter.post('/profile', addProfile);
+
+usersRouter.use(protectAdmin);
+
+usersRouter.get('/', getAllUsers);
 
 usersRouter.patch('/:id', userExists, updateUser);
 
