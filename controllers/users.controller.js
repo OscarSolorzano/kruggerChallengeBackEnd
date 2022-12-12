@@ -137,7 +137,7 @@ const addProfile = catchAsync(async (req, res, next) => {
     vaccinationDate,
     numberOfDoses,
   } = req.body;
-  sessionUser = await sessionUser.createProfile({
+  sessionUser.profile = await sessionUser.createProfile({
     birthday,
     address,
     phone,
