@@ -29,8 +29,7 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const createUser = catchAsync(async (req, res, next) => {
-  const { name, middleName, lastName, secondLastName, govId, email, role } =
-    req.body;
+  const { names, lastNames, govId, email, role } = req.body;
   const { userName, password } = req;
 
   if (role !== 'admin' && role !== 'user') {
@@ -42,10 +41,8 @@ const createUser = catchAsync(async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   await User.create({
-    name,
-    middleName,
-    lastName,
-    secondLastName,
+    names,
+    lastNames,
     govId,
     email,
     userName,
@@ -64,17 +61,7 @@ const createUser = catchAsync(async (req, res, next) => {
 });
 
 const updateUser = catchAsync(async (req, res, next) => {
-  let {
-    name,
-    middleName,
-    lastName,
-    secondLastName,
-    govId,
-    email,
-    role,
-    userName,
-    password,
-  } = req.body;
+  let { names, lastNames, govId, email, role, userName, password } = req.body;
   let { user } = req;
 
   // Encrypt the password

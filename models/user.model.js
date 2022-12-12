@@ -7,23 +7,13 @@ const User = db.define('user', {
     autoIncrement: true,
     allowNull: false,
   },
-  name: {
+  names: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  middleName: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue: '',
-  },
-  lastName: {
+  lastNames: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  secondLastName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: '',
   },
   email: {
     type: DataTypes.STRING,

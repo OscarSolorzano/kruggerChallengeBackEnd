@@ -26,42 +26,24 @@ const userExists = catchAsync(async (req, res, next) => {
 });
 
 const addUserNameAndPassword = catchAsync(async (req, res, next) => {
-  const { name, middlename, lastName, secondLastName, govId } = req.body;
+  const { names, lastNames, govId } = req.body;
   password = await crypto.randomBytes(8).toString('hex');
   req.password = password;
 
-  if (await User.findAll({ where: { name, lastName } })) {
+  const name = names.split(' ')[0];
+  const lastName = lastNames.split(' ')[0];
+
+  if ((await User.findAll({ where: { names, lastNames } })).length === 0) {
     userName = name.toLowerCase() + '.' + lastName.toLowerCase();
     req.userName = userName;
     next();
-  } else if (
-    await User.findAll({ where: { name, lastName, secondLastName } })
-  ) {
-    userName =
-      name.toLowerCase() +
-      '.' +
-      lastName.toLowerCase() +
-      '.' +
-      secondLastName.toLowerCase();
-    req.userName = userName;
-    next();
-  } else if (
-    await User.findAll({
-      where: { name, middlename, lastName, secondLastName },
-    })
-  ) {
-    userName =
-      name.toLowerCase() +
-      '.' +
-      middlename.toLowerCase() +
-      '.' +
-      lastName.toLowerCase() +
-      '.' +
-      secondLastName.toLowerCase();
-    req.userName = userName;
-    next();
   } else {
-    userName = userName = name + '.' + lastName + '.' + govId.slice(7);
+    userName = userName =
+      name.toLowerCase() +
+      '.' +
+      lastName.toLowerCase() +
+      '.' +
+      govId.toString().slice(7);
     req.userName = userName;
     next();
   }
