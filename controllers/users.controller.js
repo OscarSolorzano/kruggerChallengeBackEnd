@@ -147,7 +147,10 @@ const addProfile = catchAsync(async (req, res, next) => {
     numberOfDoses,
   });
 
-  const user = await User.findOne({ where: { id: sessionUser.id } });
+  const user = await User.findOne({
+    where: { id: sessionUser.id },
+    include: { model: Profile },
+  });
 
   user.password = undefined;
 
