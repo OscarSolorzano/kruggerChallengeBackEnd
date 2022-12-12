@@ -2,6 +2,7 @@ var crypto = require('crypto');
 
 // Models
 const { User } = require('../models/user.model');
+const { Profile } = require('../models/profile.model');
 
 // Utils
 const { catchAsync } = require('../utils/catchAsync.util');
@@ -13,6 +14,7 @@ const userExists = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     attributes: { exclude: ['password'] },
     where: { id },
+    include: { model: Profile },
   });
 
   // If user doesn't exist, send error message
