@@ -137,7 +137,7 @@ const addProfile = catchAsync(async (req, res, next) => {
     vaccinationDate,
     numberOfDoses,
   } = req.body;
-  sessionUser.profile = await sessionUser.createProfile({
+  await sessionUser.createProfile({
     birthday,
     address,
     phone,
@@ -147,9 +147,13 @@ const addProfile = catchAsync(async (req, res, next) => {
     numberOfDoses,
   });
 
+  const user = await User.findOne({ where: { id: sessionUser.id } });
+
+  user.password = undefined;
+
   res.status(200).json({
     status: 'success',
-    data: { sessionUser },
+    data: { user },
   });
 });
 
