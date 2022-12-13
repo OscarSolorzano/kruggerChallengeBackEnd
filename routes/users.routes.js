@@ -8,6 +8,7 @@ const {
   deleteUser,
   login,
   addProfile,
+  getProfileById,
 } = require('../controllers/users.controller');
 
 // Middlewares
@@ -38,6 +39,8 @@ usersRouter.post('/profile', addProfile);
 usersRouter.use(protectAdmin);
 
 usersRouter.get('/', getAllUsers);
+
+usersRouter.get('/:id', userExists, getProfileById);
 
 usersRouter.patch('/:id', userExists, updateUser);
 

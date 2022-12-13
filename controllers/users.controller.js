@@ -69,10 +69,8 @@ const updateUser = catchAsync(async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   user = await user.update({
-    name,
-    middleName,
-    lastName,
-    secondLastName,
+    names,
+    lastNames,
     govId,
     email,
     userName,
@@ -160,6 +158,14 @@ const addProfile = catchAsync(async (req, res, next) => {
   });
 });
 
+const getProfileById = catchAsync(async (req, res, next) => {
+  let { user } = req;
+  res.status(200).json({
+    status: 'success',
+    data: { user },
+  });
+});
+
 module.exports = {
   getAllUsers,
   createUser,
@@ -167,4 +173,5 @@ module.exports = {
   deleteUser,
   login,
   addProfile,
+  getProfileById,
 };
