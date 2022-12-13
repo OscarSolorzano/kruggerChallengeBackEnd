@@ -19,7 +19,7 @@ const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.findAll({
     attributes: { exclude: ['password'] },
     where: { status: 'active' },
-    include: { model: Profile },
+    include: { model: Profile, required: true },
   });
 
   res.status(200).json({
